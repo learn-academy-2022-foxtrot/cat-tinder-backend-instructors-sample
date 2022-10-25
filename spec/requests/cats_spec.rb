@@ -51,4 +51,38 @@ RSpec.describe "Cats", type: :request do
 
     end
   end
+
+  describe "cannot create a cat without valid attributes" do
+  it "doesn't create a cat without a name" do
+    cat_params = {
+      cat: {
+        age: 3,
+        enjoys: "biting everything",
+        image: "https://media.vanityfair.com/photos/5e27310def889c00087c7928/2:3/w_887,h_1331,c_limit/taylor-swift-cats.jpg"
+      }
+    }
+    #sends request to the server
+    post '/cats', params: cat_params
+    #expect an error if cat_params has no name  unprocessable entity
+    expect(response.status).to eq 422
+    # convert json response into ruby hash
+    json = JSON.parse(response.body) 
+
+    expect(json['name']).to include "can't be blank"
+  end
+
+    it "cannot create a cat without an age" do
+        cat_params = {
+          cat: {
+            name:"Hazel",
+            enjoys: "biting everything",
+            image: "https://media.vanityfair.com/photos/5e27310def889c00087c7928/2:3/w_887,h_1331,c_limit/taylor-swift-cats.jpg"
+          }
+        }
+        post '/cats', params: cat_params
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(422)
+        expect(json['age']).to include "can't be blank"
+    end
+  end
 end
