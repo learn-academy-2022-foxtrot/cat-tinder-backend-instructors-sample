@@ -79,3 +79,64 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 end
 ``` 
 `$ bundle install`
+
+## API Endpoints 10/25/22
+- API endpoints: the point of contact between the request and response cycle
+- Cloning a rails repo:
+    - $ git clone https://github.com/learn-academy-2022-foxtrot/cat-tinder-backend-instructors-sample.git
+    - $ cd cat-tinder-backend-instructors-sample
+    - $ git checkout -b api-endpoints
+    - $ bundle
+    - $ code .
+    - $ rails db:create
+    - $ rails db:migrate
+    - $ rails db:seed
+
+- Resources will give all the necessary routes for the controller actions
+
+- Controller methods will be placed in the appropriate controller in app/controllers folder
+
+- Testing api endpoints
+  - stub our endpoints
+  - make a test in the appropriate spec file under spec/requests
+  - See it fail
+  - Make it pass by adding the action to the applicable controller method
+
+## Trello card
+- As a developer, I can add an index request spec to my application.
+- As a developer, I can add an index endpoint to my application.
+
+```ruby
+
+# spec test
+  describe "GET /index" do
+    it "gets a list of cats" do
+      # make an entry
+      Cat.create(
+        name: "Hazel",
+        age: 3,
+        enjoys: "biting everything",
+        image: "https://media.vanityfair.com/photos/5e27310def889c00087c7928/2:3/w_887,h_1331,c_limit/taylor-swift-cats.jpg"
+      )
+
+      # make a request
+      get '/cats'
+
+      cat = JSON.parse(response.body)
+
+      # make assertions
+      expect(response.status).to eq(200)
+      expect(cat.length).to eq(1)
+    end
+  end
+
+# controller method
+  def index
+    cats = Cat.all
+    render json: cats
+  end
+```
+
+- As a developer, I can add a create request spec to my application.
+- As a developer, I can add a create endpoint to my application.
+    - Follow same flow as above
