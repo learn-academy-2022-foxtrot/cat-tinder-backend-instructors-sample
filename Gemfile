@@ -67,5 +67,5 @@ end
 
 gem "rspec-rails", "~> 6.0"
 #Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port)
-other than its own from which a browser should permit loading of resources.   
+# other than its own from which a browser should permit loading of resources.   
 gem 'rack-cors', :require => 'rack/cors'
